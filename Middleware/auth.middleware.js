@@ -6,8 +6,8 @@ const auth = (req, res, next) => {
     try {
       const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
       if (decoded) {
-        req.body.userId = decoded.userId;
-        req.body.userName = decoded.userName;
+        req.body.userId = decoded.userData._id;
+        req.body.userName = decoded.userData.username;
         next();
       }
     } catch (error) {
@@ -17,5 +17,4 @@ const auth = (req, res, next) => {
     res.status(401).send({ error: "Please login" });
   }
 };
-
 module.exports = { auth };
